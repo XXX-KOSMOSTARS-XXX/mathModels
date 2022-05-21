@@ -118,7 +118,7 @@ private: 					// спецификатор доступа private
 	//создаем массив
     
     int n = starti + 2;		// количество уравнений
-    int m = starti + 1;		// количество неизвестных
+    int m = starti + 2;		// количество неизвестных
     float **matrix = new float *[n];
     
     for (int k = 0; k < n; k++)
@@ -132,13 +132,14 @@ private: 					// спецификатор доступа private
  	{
         for (int l = 0; l < m; l++)
         {
+// см маткад
 // мю самое последнее - (сумма всех лямбда кроме последней)
 // все мю кроме первой отдельно - (сумма последней лямбда и первой мю)
 // вторая лямбда - вторая мю
 // ...
 // сумма всех = 1
  
-            cin >> matrix[k][l];
+            matrix[k][l];
         }
 	}
  
@@ -146,21 +147,20 @@ private: 					// спецификатор доступа private
     //прямой ход, приведение к верхнетреугольному виду
 
     float  tmp;
-    int k;
     float *xx = new float [m];
  
     for (int i = 0; i < n; i++)
     {
         tmp = matrix[i][i];
-        for (int j = n; j > = i; j--)
+        for (int j = n; j >= i; j--)
         {
             matrix[i][j] /= tmp;
         }
         
-		for (int j = i + 1; j<n; j++)
+		for (int j = (i + 1; j < n; j++)
         {
             tmp = matrix[j][i];
-            for (k = n; k >= i; k--)
+            for (int k = n; k >= i; k--)
             {
                 matrix[j][k] -= tmp*matrix[i][k];
             }
@@ -172,18 +172,31 @@ private: 					// спецификатор доступа private
     for (i = (n - 2); i >= 0; i--)
     {
         xx[i] = matrix[i][n];
-        for (j = i + 1; j < n; j++) 
+        for (j = (i + 1; j < n; j++) 
 		{
 			xx[i] -= matrix[i][j] * xx[j];
 		}
     }
  
-    //сохранение решения 
-    for (i = 0; i<n; i++)
-        cout << xx[i] << " ";
-    cout << endl;
+    // запись решения 
+    for (int i = 0; i < n; i++)
+    {
+    	P.push_back(xx[i]); // проверь, что оно выводится в нужном порядке
+	}
  
-    // тут надо очистить матрицу 
+    // очистка памяти
+	
+	if (matrix)
+	{
+    	for (int k = 0; k < n; k++)
+ 		{
+        	for (int l = 0; l < m; l++)
+        	{
+            	delete [] matrix[k][l];
+        	}
+		}
+		delete [] matrix;
+	} 
     
 	}
 };
