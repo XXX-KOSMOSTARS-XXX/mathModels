@@ -5,42 +5,53 @@
 using namespace std;
 
 class techChain 		// класс для создания ТЦ с СО и расчета вероятностей
-{
+{		
+
 public:					// спецификатор доступа public
 
-    int i; 				// максимальный индекс состояния
-
+ 		  techChain () 
+	  { 
+      starti = 1; // задано как исходное
+  		}
+  	  
+		techChain (int i) 
+	  { 
+      starti = i;
+  		}		
+ 
     void getInfo() 		// функция для задания и расчета исходных данных
     {
-        for (int j = 0; j <= i; j++)
+        for (int j = 0; j <= starti; j++)
         {
             
-            if (j < i) 	// для СО с индексом от 0 до (i-1)
+            if (j < starti) 	// для СО с индексом от 0 до (i-1)
 			{
-				cout << "Введите Т(0,"<<(j + 1)<<"): ";
-            	cin >> T[j];
+				cout << "Введите Т(0,"<<(j + 1)<<") = ";
+				cin >> inserter;
+				cout << "inserter "<<inserter;
+            /*	cin >> T[j]; // хуйня вот здесь 
 			
-            	cout << "\nСоответствующее этому значению Lam(0,"<<(j + 1)<<"): "<< getLam(T[j], j) << "\n";
+            	cout << "\nЭтому значению соответствует Lam(0,"<<(j + 1)<<") = "<< getLam(T[j], j) << "\n";
 
-            	cout << "\nВведите Тau("<<(j + 1)<<",0): ";
+            	cout << "\nВведите Тau("<<(j + 1)<<",0) = ";
             	cin >> Tau[j];
 
-            	cout << "\nСоответствующее этому значению Mu("<<(j + 1)<<",0): "<< getMu(Tau[j], j) << "\n";
+            	cout << "\nЭтому значению соответствует Mu("<<(j + 1)<<",0) = "<< getMu(Tau[j], j) << "\n";
              }
              
              else 		// для СО с индексом i
              {
-            	cout << "Введите Т(1,"<<j<<"): ";
+            	cout << "Введите Т(1,"<<j<<") = ";
             	cin >> T[j];
             	cout << "\n";
 			
-            	cout << "Соответствующее этому значению Lam(1,"<<j<<"): "<< getLam(T[j], j) << "\n";
+            	cout << "Этому значению соответствует Lam(1,"<<j<<") = "<< getLam(T[j], j) << "\n";
 
-            	cout << "Введите Тau("<<j<<",1): ";
+            	cout << "Введите Тau("<<j<<",1) = ";
             	cin >> Tau[j];
             	cout << "\n";
 
-            	cout << "Соответствующее этому значению Mu("<<j<<",1): "<< getMu(Tau[j], j) << "\n";
+            	cout << "Этому значению соответствует Mu("<<j<<",1) = "<< getMu(Tau[j], j) << "\n";*/
 			 } 
         }
     }    
@@ -49,7 +60,7 @@ public:					// спецификатор доступа public
     {
         double sum = 0; // сумма вероятностей
 
-        for (int j = 0; j <= i; j++)
+        for (int j = 0; j <= starti; j++)
         {
 // потом тут появится заполнение вектора 
         }
@@ -65,7 +76,7 @@ public:					// спецификатор доступа public
     {
         cout << "Расчитанные вероятности: \n";
         
-		for (int j = 0; j <= i; j++)
+		for (int j = 0; j <= starti; j++)
         {
             cout << "P(0," << P[j] << ") = ";
         }
@@ -73,6 +84,9 @@ public:					// спецификатор доступа public
         // и отдельный для конечного со
         // мб записывать вероятности сразу в стринг, чтоб не париться с индексами 
     }
+    
+     ~techChain() {}  
+
 
 private: 					// спецификатор доступа private
 
@@ -82,15 +96,17 @@ private: 					// спецификатор доступа private
 					Mu, 	// вектор интенсивностей СП мю
 					P;     	// вектор вероятностей
 
-	//double inserter = 0;
+	double inserter = 0;
+	
+	int starti;
     
-	double getLam (double t, int k) 	// функция для расчета интенсивностей СП лямбда
+	double getLam (const double& t, const int& k) 	// функция для расчета интенсивностей СП лямбда
     {
         Lam[k] = 1 / t;
         return Lam[k];
     }
 
-    double getMu (double tau, int k) 	// функция для расчета интенсивностей СП мю
+    double getMu (const double& tau, const int& k) 	// функция для расчета интенсивностей СП мю
     {
         Mu[k] = 1 / tau;
         return Mu[k];
@@ -104,12 +120,12 @@ int main()
 
     int i = 0;
     cout << "Введите максимальный индекс состояния вашей ТЦ: ";
-    cin >> i; 						// задание максимального индекса состояния ТЦ
+    cin >> i; 						
     cout << "\n";
     
-	techChain ourChain; 			// объявление объекта
-    ourChain.i = i;
-    ourChain.getInfo();
+	techChain ourChain(i); 			// объявление объекта
+    //ourChain.i = i;					// задание максимального индекса состояния ТЦ
+	ourChain.getInfo();
     ourChain.getProb();
     ourChain.printProb();
 
