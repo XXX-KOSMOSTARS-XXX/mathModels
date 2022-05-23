@@ -59,18 +59,14 @@ public:					// спецификатор доступа public
 	
 	void getProb() 		// функция для записи вероятностей
     {
-        double sum = 0; // сумма вероятностей
 
-        for (int j = 0; j <= starti; j++)
+/*        for (int j = 0; j <= starti; j++)
         {
 // потом тут появится заполнение вектора 
         }
+*/
+		techGauss();
 
-        if (sum != 1)
-        {
-            cout << "\nОшибка расчета вероятностей, нормировочное уравнение не равно 1"
-                 << "\nСумма вероятностей = " << sum;
-        }
     }
 
     void printProb() 	// функция для вывода на печать расчитанных вероятностей
@@ -115,88 +111,96 @@ private: 					// спецификатор доступа private
     void techGauss () 		// решение системы уравнений методом Гаусса 
     {
     
-	//создаем массив
+		//создаем массив
     
-    int n = starti + 2;		// количество уравнений
-    int m = starti + 2;		// количество неизвестных
-    float **matrix = new float *[n];
+    	int n = starti + 2;		// количество уравнений
+    	int m = starti + 2;		// количество неизвестных
+    	float **matrix = new float *[n];
     
-    for (int k = 0; k < n; k++)
-    {
-    	matrix[i] = new float[m];
-	}
+    	for (int k = 0; k < n; k++)
+    	{
+    		matrix[i] = new float[m];
+		}
 
-    //инициализируем
+    	//инициализируем
  
-    for (int k = 0; k < n; k++)
- 	{
-        for (int l = 0; l < m; l++)
-        {
+    	for (int k = 0; k < n; k++)
+ 		{
+        	for (int l = 0; l < m; l++)
+        	{
 // см маткад
 // мю самое последнее - (сумма всех лямбда кроме последней)
 // все мю кроме первой отдельно - (сумма последней лямбда и первой мю)
 // вторая лямбда - вторая мю
 // ...
 // сумма всех = 1
- 
-            matrix[k][l];
-        }
-	}
- 
-    //метод Гаусса
-    //прямой ход, приведение к верхнетреугольному виду
-
-    float  tmp;
-    float *xx = new float [m];
- 
-    for (int i = 0; i < n; i++)
-    {
-        tmp = matrix[i][i];
-        for (int j = n; j >= i; j--)
-        {
-            matrix[i][j] /= tmp;
-        }
-        
-		for (int j = (i + 1; j < n; j++)
-        {
-            tmp = matrix[j][i];
-            for (int k = n; k >= i; k--)
-            {
-                matrix[j][k] -= tmp*matrix[i][k];
-            }
-        }
-    }
-    
-    // обратный ход
-    xx[n - 1] = matrix[n - 1][n];
-    for (i = (n - 2); i >= 0; i--)
-    {
-        xx[i] = matrix[i][n];
-        for (j = (i + 1; j < n; j++) 
-		{
-			xx[i] -= matrix[i][j] * xx[j];
-		}
-    }
- 
-    // запись решения 
-    for (int i = 0; i < n; i++)
-    {
-    	P.push_back(xx[i]); // проверь, что оно выводится в нужном порядке
-	}
- 
-    // очистка памяти
-	
-	if (matrix)
-	{
-    	for (int k = 0; k < n; k++)
- 		{
-        	for (int l = 0; l < m; l++)
-        	{
-            	delete [] matrix[k][l];
+ 				
+ 				
+ 				
+ 				if (k == 0) // первое уравнение
+ 				{
+ 						
+				}
+ 				
+ 				
+            	matrix[k][l];
         	}
 		}
-		delete [] matrix;
-	} 
+ 
+    	//метод Гаусса
+    	//прямой ход, приведение к верхнетреугольному виду
+
+    	float  tmp;
+    	float *xx = new float [m];
+ 
+    	for (int i = 0; i < n; i++)
+    	{
+        	tmp = matrix[i][i];
+        	for (int j = n; j >= i; j--)
+        	{
+            	matrix[i][j] /= tmp;
+        	}
+        
+			for (int j = (i + 1; j < n; j++)
+        	{
+            	tmp = matrix[j][i];
+            	for (int k = n; k >= i; k--)
+            	{
+                	matrix[j][k] -= tmp*matrix[i][k];
+            	}
+        	}
+    	}
+    
+    	// обратный ход
+    	xx[n - 1] = matrix[n - 1][n];
+    	for (int i = (n - 2); i >= 0; i--)
+    	{
+        	xx[i] = matrix[i][n];
+        	for (int j = (i + 1; j < n; j++) 
+			{
+				xx[i] -= matrix[i][j] * xx[j];
+			}
+    	}
+ 
+    	// запись решения 
+    	for (int i = 0; i < n; i++)
+    	{
+    		P.push_back(xx[i]); // проверь, что оно выводится в нужном порядке
+		}
+ 
+    	// очистка памяти
+	
+		if (matrix)
+		{
+    		for (int k = 0; k < n; k++)
+ 			{
+        		for (int l = 0; l < m; l++)
+        		{
+            		delete [] matrix[k][l];
+        		}
+			}
+			delete [] matrix;
+		} 
     
 	}
 };
